@@ -1,0 +1,12 @@
+node_modules/
+coverage/
+artifacts/
+cache/
+typechain/
+.env
+.env.*
+.DS_Store
+resolver/node_modules/
+client/node_modules/
+logs/
+
