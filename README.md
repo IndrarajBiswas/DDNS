@@ -30,6 +30,11 @@ test/                 # Hardhat test suites
 - npm (or pnpm/yarn)
 - An Ethereum RPC endpoint (Hardhat local node or Sepolia testnet)
 
+### Project Board & Tracking
+
+- GitHub Project board: https://github.com/orgs/DDNS-Labs/projects/1
+- Weekly updates: [`docs/updates`](docs/updates/)
+
 ### Install Dependencies
 
 ```bash
@@ -59,6 +64,8 @@ cp client/gateway/.env.example client/gateway/.env
 npm run compile
 npm test
 ```
+
+> ✅ The setup steps were peer-tested by Indy on macOS (M1) using Node 18 and the Hardhat local network.
 
 ### Deploy to a Local Hardhat Node
 
