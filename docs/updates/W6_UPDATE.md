@@ -1,23 +1,32 @@
 # Week 6 Update — DDNS
 
 ## Progress (3/3)
-- Hardhat workspace boots end-to-end with a DomainRegistry Solidity skeleton, deployment script, and smoke-test exercising domain registration and lookups.
-- Resolver and gateway packages compile with TypeScript tooling so the end-to-end environment can run locally once contracts are deployed.
-- Repository documentation refreshed with exact setup steps, env samples, and project board link so every teammate can reproduce the stack.
+- Finalized project topic: **Blockchain-anchored DNS for DDoS Prevention**.
+- Conducted background study on DNS vulnerabilities such as cache poisoning, hijacking, and central failure.
+- Reviewed key related works like BDNS, TI-DNS, Phicoin DDNS, and DagGridLedger to understand current decentralized DNS approaches.
+- Defined initial project goals: to design a decentralized, tamper-resistant DNS registry using Ethereum smart contracts.
+- Discussed and outlined core system components — on-chain registry, resolver validation, and client gateway — at a conceptual level.
 
 ## Evidence (3/3)
-- `npm install && npm run compile` builds the DomainRegistry artifacts and TypeScript types.
-- `npm test` runs the initial Hardhat test suite that registers a domain and asserts on stored records.
-- README walkthrough peer-tested by Indy on macOS (M1) using Node 18 and Hardhat local node.
+- Draft project proposal document completed and uploaded (`docs/proposal/Project_Proposal.docx`).
+- Initial folder structure created (`docs/updates/`, `docs/security/`, `contracts/`, etc.).
+- Brainstorm meeting notes and references compiled in a shared Google Doc (linked internally).
+- Reference papers collected and cited for comparative analysis.
 
 ## Technical Depth (2/2)
-- Contract covers ownership lifecycle (register, renew, transfer) plus typed DNS record storage with TTL metadata.
-- Test harness seeds signer fixtures, validates emitted events, and checks resolver-style accessors for domain metadata.
+- Explored how Ethereum-based smart contracts can store DNS records with verifiable ownership.
+- Studied the ENS (Ethereum Name Service) architecture as a reference model for domain registration and lookup.
+- Identified potential use of off-chain indexers and resolver caching to reduce latency.
+- Considered governance and dispute resolution requirements within a decentralized DNS environment.
 
 ## Next Plan (1/1)
-- Harden resolver <> gateway integration with signed responses and caching policies.
-- Stand up GitHub Actions coverage + linting, then expand contract tests for expiration edge cases.
+- Begin designing the system architecture diagram and defining smart contract interfaces (`DomainRegistry`, `AccessControl`).
+- Set up a local Hardhat environment and verify connectivity to a testnet.
+- Assign team members to literature review and architecture documentation tasks.
 
 ## Collaboration (1/1)
 - Gabby implemented the Solidity skeleton + deploy script, Vien authored the resolver stub, Dheeraj maintained the resolver <> gateway wiring, and Indy executed the peer verification pass on the README runbook.
 - Weekly sync held Sunday to assign issues on the GitHub project board (backlog now tracks MVP + stretch stories).
+
+_Updated by: Dheeraj Kumar_  
+_Date: 2025-10-05_
