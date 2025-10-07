@@ -174,3 +174,9 @@ Aligned with the project plan:
 - The resolver and gateway are built in TypeScript / Node
 - You can swap to testnet (e.g. Sepolia) by adjusting RPC_URL and deploying appropriately
 - Future enhancements: governance, dispute resolution modules, browser plugin, etc.
+
+### Images of Project Board
+<img width="1321" height="868" alt="image" src="https://github.com/user-attachments/assets/c7fb0fd9-45ea-4c17-a7f4-3372786d858e" />
+
+<img width="801" height="281" alt="image" src="https://github.com/user-attachments/assets/340af1cb-f5f1-457b-8808-0cc48cd5bb0e" />
+
