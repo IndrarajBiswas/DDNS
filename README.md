@@ -22,87 +22,97 @@ scripts/              # Hardhat deployment scripts
 test/                 # Hardhat test suites
 ```
 
-## Getting Started
+## Getting Started (Local Setup & Run)
+
+These steps let you run the full system (contracts, resolver, gateway) locally for development / testing.
+
 
 ### Prerequisites
 
-- Node.js 18+
-- npm (or pnpm/yarn)
-- An Ethereum RPC endpoint (Hardhat local node or Sepolia testnet)
+- Node.js 18+  
+- npm (or pnpm / yarn)  
+- Git  
+- Optionally: Docker (if you containerize parts)  
 
-### Project Board & Tracking
-
-- GitHub Project board: https://github.com/orgs/DDNS-Labs/projects/1
-- Weekly updates: [`docs/updates`](docs/updates/)
-
-### Install Dependencies
+### Clone & Install
 
 ```bash
+git clone https://github.com/IndrarajBiswas/DDNS.git
+cd DDNS
 npm install
 ```
 
+### Install Dependencies
 To work on resolver or gateway packages you may also install their local dependencies:
-
 ```bash
 cd resolver && npm install
 cd ../client/gateway && npm install
 ```
 
-### Environment Variables
 
-Copy the provided examples and update secrets as needed.
-
+### Setup Enviroment Variables
 ```bash
 cp .env.example .env
 cp resolver/.env.example resolver/.env
 cp client/gateway/.env.example client/gateway/.env
+``````
+RPC_URL=""
+CHAIN_ID=""
+PRIVATE_KEY=""
+TOKEN_NAME=Ethereum
+TOKEN_SYMBOL=ETH
+TOKEN_CAP=2000000
+TOKEN_INITIAL=1000000
+TOKEN_ADDRESS=""
 ```
+Edit the ```.env``` file to include:
+- Ethereum RPC (e.g. RPC_URL)
+- Private key(s) for deployment
+- Registry contract address (for resolver/gateway)
+- Any other secrets required by those services
+
 
 ### Compile & Test Contracts
 
 ```bash
 npm run compile
 npm test
+
 ```
+This will compile smart contracts and run unit tests.
 
-> ✅ The setup steps were peer-tested by Indy on macOS (M1) using Node 18 and the Hardhat local network.
-
-### Deploy to a Local Hardhat Node
-
-```bash
+### Deploy Locallly (Hardhat)
+1. Start a Hardhat local node
+```bash 
 npx hardhat node
+```
+2. In a separate terminal, deploy the contracts
+```bash
 npm run deploy
 ```
-
-Record the deployed `DomainRegistry` address and update `resolver/.env` with the value.
+3. After deploymeny, you'll get a deployed ```DomainRegistry``` contract address → Insert that address into ```resolver/.env``` under the relevant variable (e.g., ```REGISTRY_ADDRESS```).
 
 ### Start the Resolver
 
 ```bash
 cd resolver
-npm install
 npm run start
 ```
 
-The resolver exposes:
+It exposes APIs like:
+- ```POST /resolver``` -- expects payload ```{"domain": "example.eth", "recordType": "A"}``` → returns record + metadata
+- ```GET /health``` — for health check
 
-- `POST /resolve` – accepts `{ "domain": "example.eth", "recordType": "A" }` and returns the on-chain record payload.
-- `GET /health` – health probe endpoint.
-
-### Start the Gateway
-
+### Start the Gateway 
 ```bash
 cd client/gateway
-npm install
 npm run start
 ```
 
-The gateway provides a local HTTP service with:
-
-- `POST /resolve` – verifies responses via the resolver and caches them with TTL enforcement.
-- `GET /health` – service health status.
-
-These components form the basis for browser extensions or system-level DNS proxies.
+Exposes:
+- ```POST /resolve``` — verifies resolver results, caches them with TTL
+- ```GET /health``` — service status
+Once both are running, requests to the gateway will ultimately verify and serve DNS responses based on on-chain data.
 
 ## Smart Contract Overview
 
@@ -130,6 +140,20 @@ Future enhancements include signing responses and federating multiple resolver n
 - Validates responses from the resolver and applies bounded caching to prevent stale record reuse.
 - Designed to evolve into a browser extension or local DNS forwarder.
 
+
+## Project Board & Tracking
+
+We use a GitHub Project Board to track user stories, backlog, in-progress, done, etc.
+    - GitHub Project board: https://github.com/orgs/DDNS-Labs/projects/1
+    - Weekly updates: docs/updates
+    - We keep Backlog, In Progress, Review, Done columns
+    - Each user story is added as a card with acceptance criteria, estimates, and owner
+
+## Peer-Testing Confirmation
+
+“The above setup instructions were tested by [Indy] on [Linux, Node 22, Hardhat local]. Everything worked as described.”
+
+
 ## Roadmap & Milestones
 
 Aligned with the project plan:
@@ -144,17 +168,9 @@ Aligned with the project plan:
 - **W13** Stretch goals: multi-resolver voting, IPFS integration (pending).
 - **W14** Evaluation, benchmarking, and documentation (pending).
 
-## Next Steps
+## Assumptions & Notes
 
-- Implement signed resolver responses and verification logic in the gateway.
-- Add governance/dispute resolution smart contracts.
-- Integrate performance benchmarking scripts and threat-model test cases.
-- Explore decentralized storage backends (IPFS) for large record payloads.
-- Prototype browser extension or system DNS interceptors leveraging the gateway service.
-
-## References
-
-1. Giamouridis, G., Kang, B., Aniello, L. (2024). *Blockchain-based DNS: Current Solutions and Challenges*. CEUR Workshop Proceedings.
-2. DagGridLedger research on sharded DAG DNS architectures.
-3. Fu, Y., Wei, J., Li, Y., Peng, B., Li, X. (2023). *TI-DNS: A Trusted and Incentive DNS Resolution Architecture based on Blockchain*. arXiv preprint.
-4. Yang, G. et al. (2025). *Blockchain-Based Decentralized Domain Name System*. arXiv preprint.
+- We currently use Hardhat + Solidity for the smart contract track
+- The resolver and gateway are built in TypeScript / Node
+- You can swap to testnet (e.g. Sepolia) by adjusting RPC_URL and deploying appropriately
+- Future enhancements: governance, dispute resolution modules, browser plugin, etc.
