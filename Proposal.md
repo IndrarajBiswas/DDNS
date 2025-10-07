@@ -32,6 +32,9 @@ Alternate options (e.g. custom chain or DAG architecture) exist (e.g. DagGridLed
 
 ## Architecture Sketch
 
+<img width="1900" height="1330" alt="image" src="https://github.com/user-attachments/assets/707a3e28-3ef7-4ed3-978a-05b6c59265a1" />
+
+
 **Description / FLow**
     - **Smart Contracts (on-chain):**
         - Domain registry contract: manages registrations, renewals, transfers, and updates.
